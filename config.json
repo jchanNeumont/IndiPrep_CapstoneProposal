@@ -1,0 +1,15 @@
+{
+    "menu": [
+        ["Home", "/"],
+        ["Features", "/features"],
+        ["Order", "/addOrder"],
+        ["Bulldogs", "/bulldogs"],
+        ["Login", "/u/login"],
+        ["Signup", "/u/signup"],
+        ["Profile", "/u/profile"]
+    ],
+    "product":[
+        ["Title", "iPhone 9", "Image", "/images/TerribleIphone9.webp", "Description", "An apple mobile which is nothing like apple"],
+        ["Title", "Terrible Banana Phone", "Image", "/images/Banana-Phone-Case.jpg", "Description", "A banana mobile which is nothing like banana"]
+    ]
+}

@@ -1,0 +1,63 @@
+h1 {
+    color: red;
+}
+
+html{
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+
+#pageAlignment{
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+
+.signupForm {
+    margin: 5px;
+}
+
+#productImage {
+    max-width: 550px;
+    max-height: 225px;
+}
+
+.productTable {
+    background-color: aquamarine;
+    padding: 10px;
+    margin: 5px;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 700;
+}
+
+#navLink{
+    color: red;
+}
+
+#productTable {
+    align-items: center;
+    align-content: center;
+    position: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#nav-link {
+    color: black;
+}
+
+#chartDesign {
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+
+canvas{
+    margin: 0 auto;
+    }

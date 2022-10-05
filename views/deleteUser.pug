@@ -1,0 +1,10 @@
+extends layout
+
+block layout-content
+        h1(class="userIntro") Delete User
+        h2(class="userIntro") Deleting a user can't be undone.
+        form(id="signupForm" action="/u/deleteUser", method="post")
+            label(class="signupForm" for="username") Username:
+            input(class="signupForm" type="text", name="username", placeholder="Username", value=username) 
+            br
+            input(class="signupForm" type="submit", value="Delete")

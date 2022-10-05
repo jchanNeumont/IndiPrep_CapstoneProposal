@@ -1,0 +1,9 @@
+extends layout
+
+block layout-content
+        h1(class="userIntro") Update a user to be an admin
+        form(id="signupForm" action="/u/makeUserAdmin", method="post")
+            label(class="signupForm" for="username") Username:
+            input(class="signupForm" type="text", name="username", placeholder="Username", value=username) 
+            br
+            input(class="signupForm" type="submit", value="Update")

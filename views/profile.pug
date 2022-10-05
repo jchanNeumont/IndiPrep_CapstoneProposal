@@ -1,0 +1,27 @@
+extends layout
+
+block layout-content
+
+    h1(class="homePageIntro") Your information
+    br
+    if loggedInUser
+        Label(class="productTable") Username: #{loggedInUser.Username}
+        br
+        Label(class="productTable") Hashed Password: #{loggedInUser.Password}
+        br
+        Label(class="productTable") Email: #{loggedInUser.Email}
+        br
+        Label(class="productTable") Age: #{loggedInUser.Age}
+        br
+        Label(class="productTable") First Favorite Number Answer: #{loggedInUser.Answers.Answer1}
+        br
+        Label(class="productTable") Second Favorite Number Answer: #{loggedInUser.Answers.Answer2}
+        br
+        Label(class="productTable") Third Favorite Number Answer: #{loggedInUser.Answers.Answer3}
+        br
+        if loggedInUser.Admin
+            Label(class="productTable") Admin #{loggedInUser.Admin}
+            br
+        a(href="/u/editProfile" class="signupForm") Edit User Profile
+    else 
+        Label(class="productTable") Nobody is currently logged in dummy.

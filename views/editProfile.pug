@@ -1,0 +1,35 @@
+extends layout
+
+block layout-content
+        h1(class="userIntro") Edit Profile
+        form(id="signupForm", action="/u/editProfile", method="post")
+            input(class="signupForm",type="text", name="username", placeholder="Username")
+            br
+            input(class="signupForm",type="text", name="password", placeholder="Password")
+            br
+            input(class="signupForm",type="text", name="confirmPassword", placeholder="Confirm Password")
+            br
+            input(class="signupForm", type="text", name="email", placeholder="Email")
+            br
+            input(class="signupForm", type="number", name="age", placeholder="Age")
+            br
+            Label(class="signupForm") Favorite Number 
+            select(class="signupForm" name="Question1") 
+                option(value="1") 1
+                option(value="2") 2
+                option(value="3") 3
+            br
+            Label(class="signupForm") Second Favorite Number 
+            select(class="signupForm" name="Question2") 
+                option(value="1") 1
+                option(value="2") 2
+                option(value="3") 3
+            br
+            Label(class="signupForm") Third Favorite Number 
+            select(class="signupForm" name="Question3") 
+                option(value="1") 1
+                option(value="2") 2
+                option(value="3") 3
+            br
+            input(class="signupForm",type="submit", name="submitButton", value="Update Account")
+            br
