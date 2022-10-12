@@ -1,8 +1,12 @@
 extends layout
 
 block layout-content
-    script(src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js")
-    h1(class="pageAlignment") Welcome to the Home Page
+    div.View.WelcomeView
+        script(src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js")
+        h1.Banner(class="pageAlignment") Welcome to the Home Page
+        div.NavButtons
+            a(href="/user")
+                div.NavButton Just dive in!
     //- h2 Chart Example: 
     //- div(class="pageAlignment")
     //-     span Chart for Answer 1

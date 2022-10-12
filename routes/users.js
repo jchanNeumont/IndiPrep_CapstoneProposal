@@ -27,6 +27,26 @@ router.get("/companySignup", (req,res) => {
     res.render("companySignup");
 })
 
+router.post("/companySignup", async (req,res) =>{
+    var admin = false;
+    if(req.body.adminCheck == "on"){
+        admin = true;
+    }
+    let model = {
+        loggedInUser: req.session.user,
+        config: config
+    };
+    if(req.body.password == req.body.confirmPassword) {
+        let hashedPassword = await bcrypt.hash(req.body.password, 10);
+        let result = await dal.createCompany(req.body.companytitle, req.body.industry, educationrequirement, phonenumber, hashedPassword, email, answers, admin);
+        res.redirect("/u/login");
+    }
+    else{
+        res.render("companySignup");
+    }
+    res.render("home");
+})
+
 router.post("/signup", async (req,res) => {
     let firstname = req.body.firstname;
     let lastname = req.body.lastname;

@@ -44,8 +44,11 @@ let companySchema = mongoose.Schema ({
     CompanyTitle: String,
     Industry: String,
     Email: String,
+    EducationRequirement: String,
+    Password: String,
     PhoneNumber: String,
-    Reviews: Object
+    Reviews: Object,
+    Admin: Boolean
 })
 
 let jobSchema = mongoose.Schema ({
@@ -77,6 +80,28 @@ const findUserByEmail = async (email) => {
     console.log("User: " + user);
     console.log("Email Input: " + email);
     return user;
+}
+
+const createCompany = async (companyTitle, industry, educationRequirement, password, email, phoneNumber, admin) => {
+    try{
+        let company = new Company({
+            CompanyTitle: companyTitle,
+            Industry: industry,
+            Email: email,
+            EducationRequirement: educationRequirement,
+            Password: password,
+            PhoneNumber: phoneNumber,
+            Reviews: null,
+            Admin: admin
+        });
+
+        company.save().then(company => console.log(company.CompanyTitle + ' ' + company.Industry + ' added.'));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+const createJob = async (jobTitle, jobTags, jobSalary, jobDescription) => {
 }
 
 const createUser = async (firstname, lastname, el, phonenumber, dob, gender, username, password, age, email, answers, admin) => {
