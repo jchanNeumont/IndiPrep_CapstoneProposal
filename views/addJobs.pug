@@ -1,0 +1,14 @@
+extends layout 
+
+block layout-content 
+    h1(class="userIntro") Post A Job Loser 
+
+    form(id="signupForm", action="/u/addJobs", method="post") 
+        input(class="signupForm", type="text", name="jobTitle", placeholder="Job Title")
+        br
+        input(class="signupForm", type="number", name="jobSalary", placeholder="Salary")
+        br
+        input(class="signupForm", type="text", name="jobDescription", placeholder="Job Description")
+        br
+        input(class="signupForm", type="submit", name="submitButton", value="Post a Job")
+        br

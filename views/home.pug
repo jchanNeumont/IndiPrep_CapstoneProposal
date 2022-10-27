@@ -3,16 +3,53 @@ extends layout
 block layout-content
     div.View.WelcomeView
         script(src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js")
-        h1.Banner(class="pageAlignment") Welcome to the Home Page
-        div.NavButtons
-            a(href="/user")
-                div.NavButton Just dive in!
+        h1.Banner(class="pageAlignment") Welcome to IndiPrep
+        div.SpideyView
+            div.Message
+                div.Title
+                    h3 Making the Best
+                    h1 Food For Devs
+                    span.Details Access the WHATABYTE Team Portal
+        div.RightView
+            div.RightMessage
+                div.Title
+                    h3 Making the Best
+                    h1 Food For Devs
+                    span.Details Screw Me
+        div.SpideyView
+            div.Message
+                div.Title
+                    h3 Making the Best
+                    h1 Food For Devs
+                    span.Details Access the WHATABYTE Team Portal
+        div.SpideyView
+            div.Message
+                div.Title
+                    h3 Making the Best
+                    h1 Food For Devs
+                    span.Details Access the WHATABYTE Team Portal
+
+        div.ButtonList
+            div.NavButtons
+                if isAuthenticated
+                    a(href="/")
+                    div.NavButton Just dive in!
+                else
+                    a(href="/login")
+                        div.NavButton Log in
+            div.NavButtons
+                a(href="/u/signup")
+                    div.NavButton Just dive in!
+            div.NavButtons
+                a(href="/u/signup")
+                    div.NavButton Just dive in!
+            
     //- h2 Chart Example: 
     //- div(class="pageAlignment")
     //-     span Chart for Answer 1
-    //-     canvas(class="chartDesign" id="myChart1", width="200", height="200")
+    //-     canvas(class="chartDesign" id="myChart1" width="200" height="200")
     //-     span Chart for Answer 2
-    //-     canvas(class="chartDesign" id="myChart2", width="200", height="200")
+    //-     canvas(class="chartDesign" id="myChart2" width="200" height="200")
     //-     span Chart for Answer 3
-    //-     canvas(class="chartDesign" id="myChart3", width="200", height="200")
+    //-     canvas(class="chartDesign" id="myChart3" width="200" height="200")
     //- script(src="/js/site.js")

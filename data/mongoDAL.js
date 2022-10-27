@@ -50,8 +50,10 @@ let companySchema = mongoose.Schema ({
     Reviews: Object,
     Admin: Boolean
 })
+let Company = mongoose.model(company_collection, companySchema);
 
 let jobSchema = mongoose.Schema ({
+    JobCompany: {type: mongoose.Schema.Types.ObjectId, ref: Company},
     JobTitle: String,
     JobTags: Object,
     JobSalary: Number,
@@ -61,7 +63,6 @@ let jobSchema = mongoose.Schema ({
 
 let User = mongoose.model(people_collection, userSchema);
 let Job = mongoose.model(job_collection, jobSchema);
-let Company = mongoose.model(company_collection, companySchema);
 
 let applySchema = mongoose.Schema ({
     Applier: {type: mongoose.Schema.Types.ObjectId, ref: User},
@@ -77,9 +78,52 @@ const getAllJobs = async () => {
 
 const findUserByEmail = async (email) => {
     var user = await User.findOne({Email: email});
+    if (user == null){
+        user = await Company.findOne({Email: email});
+    }
     console.log("User: " + user);
     console.log("Email Input: " + email);
     return user;
+}
+
+const findCompanyByEmail = async (email) => {
+    var user = await Company.findOne({Email: email});
+    console.log("Company: " + user);
+    console.log("Email Input: " + email);
+    return user;
+}
+
+const createJob = async (jobCompany, jobTitle, jobTags, jobSalary, jobDescription) => {
+    const client = await MongoClient.connect(uri);
+
+    try{
+        //actual code to interact with mongodb
+        const db = client.db(expressDBName);
+
+        const collection = db.collection(job_collection);
+
+        let job = new Job({
+            jobCompany: jobCompany,
+            JobTitle: jobTitle,
+            JobTags: jobTags,
+            JobSalary: jobSalary,
+            JobDescription: jobDescription
+        });
+
+        //var results = await collection.insertOne(user);
+        job.save().then(job => console.log(job.JobTitle + ' added.'));
+
+        //console.log("createUsers: results");
+        //console.log(results);
+
+        //return results;
+
+    }catch(err){
+        console.log("createJob: Something bad happened.");
+        console.log(err);
+    }finally{
+        client.close();
+    }
 }
 
 const createCompany = async (companyTitle, industry, educationRequirement, password, email, phoneNumber, admin) => {
@@ -101,8 +145,6 @@ const createCompany = async (companyTitle, industry, educationRequirement, passw
     }
 }
 
-const createJob = async (jobTitle, jobTags, jobSalary, jobDescription) => {
-}
 
 const createUser = async (firstname, lastname, el, phonenumber, dob, gender, username, password, age, email, answers, admin) => {
     const client = await MongoClient.connect(uri);
@@ -399,6 +441,9 @@ const findUserByUsername = async (user) => {
     }
 }
 
+exports.createJob = createJob;
+exports.findCompanyByEmail = findCompanyByEmail;
+exports.createCompany = createCompany;
 exports.findUserByEmail = findUserByEmail;
 exports.getAllJobs = getAllJobs;
 exports.createUser = createUser;

@@ -12,26 +12,33 @@ html
         header
             
             nav(class="navbar")
-                div()
+                div
                     a(class="nav-link text-dark" href="/") Home 
-                    a(class="nav-link text-dark" href="/u/Profile") Profile
                     if loggedInUser
                         a(class="nav-link text-dark" href="/u/Logout") Logout
                         if loggedInUser.Admin 
                             a(class="nav-link text-dark" href="/u/deleteUser") Delete Users
                             a(class="nav-link text-dark" href="/u/makeUserAdmin") Make User An Admin
+                            a(class="nav-link text-dark" href="/u/companyProfile") Company Profile 
+                            a(class="nav-link text-dark" href="/u/addJobs") Post A Job
+                        else 
+                            a(class="nav-link text-dark" href="/u/Profile") Profile
                     else
                         div(class="dropdown")
                             button(class="dropbtn") Signup 
                                 div(class="dropdown-content")
                                     a(class="nav-link text-dark" href="/u/signup") User Signup
                                     a(class="nav-link text-dark" href="/u/companySignup") Company Signup     
-                                                div(class="dropdown")
                         div(class="dropdown")
                             button(class="dropbtn") Logins
                                 div(class="dropdown-content")
                                     a(class="nav-link text-dark" href="/u/Login") User Login
-                                    a(class="nav-link text-dark" href="/u/Login") Company Login   
+                                    a(class="nav-link text-dark" href="/u/companyLogin") Company Login   
+                div(class="search-box")
+                    button(class="btn-search")
+                        img(src="/images/magnifyGlass-removebg-preview.png", alt="")
+                    input(type="text" class="input-search" placeholder="Search")
+                
                 
                 //- div(class="container-fluid")
                 //-     ul(class="navbar-nav me-auto mb-2 mb-lg-0")
@@ -39,7 +46,5 @@ html
                 //-         a(class="nav-link text-dark" href=item[1])=item[0]
                             
                                 
-        section(class="content")
-            div#root
-                block layout-content
-        footer Copyright IndiPrep 2022
+        div#root
+            block layout-content

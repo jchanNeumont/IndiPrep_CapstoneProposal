@@ -1,0 +1,15 @@
+extends layout
+
+block layout-content
+    h1(class="pageAlignment") Company Login 
+    span(class="error") #{ErrorMessage}
+    form(id="signupForm" action="/u/companyLogin", method="post")
+        label(class="signupForm" for="email") Email:
+        input(class="signupForm" type="text", name="email", placeholder="Email", value=email) 
+        br
+        label(class="signupForm" for="password") Password:
+        input(class="signupForm" type="password", name="password", placeholder="Password", value=password) 
+        br
+        input(class="signupForm" type="submit", value="Login")
+        br
+        a(href="/u/companySignup", class="signupForm") Don't have an Account? Register Here 

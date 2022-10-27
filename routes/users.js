@@ -4,6 +4,13 @@ const dal = require('../data/mongoDAL');
 const config = require('../config.json');
 const bcrypt = require('bcrypt');
 const { on } = require('nodemon');
+const { model } = require('mongoose');
+// const { requiresAuth } = require('express-openid-connect');
+// const app = express();
+
+// app.get('/profile', requiresAuth(), (req, res) => {
+//   res.send(JSON.stringify(req.oidc.user));
+// });
 
 
 router.get("/signup", (req,res) => {
@@ -27,24 +34,46 @@ router.get("/companySignup", (req,res) => {
     res.render("companySignup");
 })
 
+router.get("/addJobs", async (req,res) => {
+    res.render("addJobs");
+})
+
+router.post("/addJobs", async (req,res) => {
+    let jobTitle = req.body.jobTitle;
+    let jobSalary = req.body.jobSalary;
+    let jobDescription = req.body.jobDescription;
+    let jobCompany = req.session.user._id;
+    await dal.createJob(jobCompany,jobTitle, null, jobSalary, jobDescription);
+    let model = {
+        loggedInUser: req.session.user,
+        config: config
+    };
+    res.render("home", model);
+})
+
 router.post("/companySignup", async (req,res) =>{
-    var admin = false;
-    if(req.body.adminCheck == "on"){
-        admin = true;
-    }
+    var admin = true;
+    // if(req.body.adminCheck == "on"){
+    //     admin = true;
+    // }
+    let companytitle = req.body.companytitle;
+    let industry = req.body.industry;
+    let educationrequirement = req.body.educationrequirement;
+    let phonenumber = req.body.phonenumber;
+    let email = req.body.email;
     let model = {
         loggedInUser: req.session.user,
         config: config
     };
     if(req.body.password == req.body.confirmPassword) {
         let hashedPassword = await bcrypt.hash(req.body.password, 10);
-        let result = await dal.createCompany(req.body.companytitle, req.body.industry, educationrequirement, phonenumber, hashedPassword, email, answers, admin);
-        res.redirect("/u/login");
+        let result = await dal.createCompany(companytitle, industry, educationrequirement, hashedPassword, email, phonenumber, admin);
+        res.redirect("/u/companyLogin");
     }
     else{
         res.render("companySignup");
     }
-    res.render("home");
+    //res.render("home");
 })
 
 router.post("/signup", async (req,res) => {
@@ -65,9 +94,9 @@ router.post("/signup", async (req,res) => {
         Answer3: req.body.Question3
     }
     var admin = false;
-    if(req.body.adminCheck == "on"){
-        admin = true;
-    }
+    // if(req.body.adminCheck == "on"){
+    //     admin = true;
+    // }
     console.log(admin);
     let model = {
         loggedInUser: req.session.user,
@@ -204,57 +233,84 @@ router.post("/deleteUser", async (req, res) => {
     res.render("deleteUser",model);
 })
 
-router.post("/login", async (req, res) => {
-    //Get the values form the posted form
-    //Remeber our body parser
+router.get("/companyProfile", async (req, res) => {
+    let model = {
+        loggedInUser: req.session.user,
+        config: config
+    };
+    res.render("companyProfile", model);
+})
+
+router.post("/companyLogin", async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
-    //let hashedPassword = await bcrypt.hash(password, 10);
-    let findUser = await dal.findUserByEmail(email);
+    let findUser = await dal.findCompanyByEmail(email);
+    //console.log(findUser);
+    if(findUser != null){
+        if(await bcrypt.compare(password,findUser.Password)){
 
-    //console.log(findUser.Password);
-    //console.log(hashedPassword);
+            console.log(`${findUser.CompanyTitle} logged in`);
 
-    //console.log(await bcrypt.compare(password,findUser.Password));
-    
-
-    //Check the database to see if we have a match
-    //If we do, do the passwords match?
-    if(await bcrypt.compare(password,findUser.Password)){
-        //Success!
-        //Lets create a session and add some data that we want to track between requests
-        //Don't put anything secure in the session because it ends up in the user's browser's cookies
-        console.log(`${findUser.Username} logged in`);
-
-        var user = {
+            var user = {
             findUser: findUser
         };
-
         req.session.user = user.findUser;
-        // req.session.username = username;
-        // req.session.userId = 1;
 
-        //res.send("Login Successful!");
         res.redirect("/");
+        }
     }
     else{
         //Invalid Login!
         let model = {
             ErrorMessage: "Invalid Login!",
-            username: username,
+            email: email,
+            password: password,
+            config: config
+        };
+        res.render("companyLogin", model);
+    }
+})
+
+router.get("/companyLogin", async (req, res) => {
+    let model = {
+        loggedInUser: req.session.user,
+        config: config
+    };
+    res.render("companyLogin",model);
+})
+
+router.post("/login", async (req, res) => {
+
+    let email = req.body.email;
+    let password = req.body.password;
+
+    let findUser = await dal.findUserByEmail(email);
+
+    if(findUser != null){
+        if(await bcrypt.compare(password,findUser.Password)){
+
+            console.log(`${findUser.Username} logged in`);
+
+            var user = {
+                findUser: findUser
+            };
+
+            req.session.user = user.findUser;
+
+            res.redirect("/");
+        }
+}
+    else{
+        //Invalid Login!
+        let model = {
+            ErrorMessage: "Invalid Login!",
+            email: email,
             password: password,
             config: config
         };
         res.render("login", model);
     }
-
-    //If login is valid send them to Home Page
-    //Setup the user's session. What should we store?
-    
-    //Else, return them back to the login page
-
-    //res.send("Post: Login",{config});
 })
 
 module.exports = router;

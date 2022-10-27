@@ -1,0 +1,24 @@
+extends layout
+
+block layout-content
+  div.View.WelcomeView
+    h1.Banner(class="homePageIntro") Company Profile
+    br
+    div.Message 
+        if loggedInUser
+            Label(class="productTable") CompanyTitle: #{loggedInUser.CompanyTitle}
+            br
+            Label(class="productTable") Hashed Password: #{loggedInUser.Password}
+            br
+            Label(class="productTable") Email: #{loggedInUser.Email}
+            br
+            Label(class="productTable") Education Requirement: #{loggedInUser.EducationRequirement}
+            br
+            Label(class="productTable") Phone Number: #{loggedInUser.PhoneNumber}
+            br
+            if loggedInUser.Admin
+                Label(class="productTable") Admin #{loggedInUser.Admin}
+                br
+            a(href="/u/editProfile" class="signupForm") Edit User Profile
+        else 
+            Label(class="productTable") Nobody is currently logged in dummy.
